@@ -3,7 +3,7 @@
 #include "Item.h"
 #include <vector>
 
-// Klasa Player dziedziczy po Character.
+// Klasa Player dziedziczy po Character.1
 class Player : public Character {
     int xp;
     std::vector<Item> inventory;
