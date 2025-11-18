@@ -39,6 +39,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="enemies.txt">
