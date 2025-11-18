@@ -33,5 +33,33 @@
     <ClCompile Include="PathOfHeroes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="enemies.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="items.txt">
+      <Filter>data</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

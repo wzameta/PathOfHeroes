@@ -1,0 +1,4 @@
+#name,hp,atk,def,xp
+Goblin,50,8,2,20
+Ork,90,14,4,50
+Boss,200,25,8,200

@@ -1,0 +1,3 @@
+#name,type,value,description
+MiksturaMala,heal,25,Restore 25 HP
+MiksturaDuza,heal,60,Restore 60 HP
