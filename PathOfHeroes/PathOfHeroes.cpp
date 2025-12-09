@@ -3,9 +3,23 @@
 
 #include <iostream>
 
+
 int main()
 {
     std::cout << "Hello World czesc!\n";
+
+    int tablica[10] = { 1,2,3,4,5,6,7,8,9,10 };
+
+    for (int i = 0; i < 10; i++) {
+        std::cout << tablica[i] << std::endl;
+    }
+
+    return 0;
+
+
+
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
