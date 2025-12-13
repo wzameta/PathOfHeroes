@@ -131,7 +131,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="PathOfHeroes.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
