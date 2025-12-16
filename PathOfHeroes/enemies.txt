@@ -1,0 +1,3 @@
+Goblin 30 5
+Skeleton 40 6
+Orc 60 8

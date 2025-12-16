@@ -58,5 +58,8 @@
     <Text Include="enemies.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="report.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
