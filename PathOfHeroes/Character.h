@@ -10,6 +10,7 @@ public:
 
 	int getHealth() const;
 	int getAttackPower() const;
+	bool isAlive() const;
 
 	virtual void attack(Character* target) = 0;
 	virtual void takeDamage(int dmg) = 0;

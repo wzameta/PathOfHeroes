@@ -10,6 +10,9 @@ int Character::getAttackPower() const {
 	return attackPower;
 }
 
+bool Character::isAlive() const {
+	return health > 0;
+}
 
 
 
