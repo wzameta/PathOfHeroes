@@ -1,14 +1,17 @@
 #include "Game.h"
+#include "Enemy.h"
 #include "FileManager.h"
 #include <iostream>
 
 void Game::start() {
     Player p(50, 10);
-    Enemy e(30, 5);
+    Enemy e(30, 5, EnemyType::Demon);
 
     std::cout << "Battle simulation..." << std::endl;
+    std::cout << "Enemy type: " << e.getTypeAsString() << std::endl;
     e.takeDamage(p.getAttackPower());
     std::cout << "Enemy HP after hit: " << e.getHealth() << std::endl;
+
 
 
 	// Load enemies from file
