@@ -3,7 +3,7 @@
 
 class Character {
 protected:
-	int health, attackPower;
+	int health, attackPower, maxHealth;
 public:
 	Character(int hp, int ap);
 	virtual ~Character() = default;
@@ -11,6 +11,8 @@ public:
 	int getHealth() const;
 	int getAttackPower() const;
 	bool isAlive() const;
+	bool isDead() const;
+	void heal(int amount);
 
 	virtual void attack(Character* target) = 0;
 	virtual void takeDamage(int dmg) = 0;
