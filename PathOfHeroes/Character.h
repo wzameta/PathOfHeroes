@@ -11,13 +11,18 @@ public:
 	int getHealth() const;
 	int getAttackPower() const;
 
+	
+
+
 	virtual void attack(Character* target) = 0;
 	virtual void takeDamage(int dmg) = 0;
 
+	
 	bool isAlive() const;
+
+
 };
 
-bool Character::isAlive() const {
-	return health > 0;
-}
+
+
 
