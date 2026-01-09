@@ -38,21 +38,52 @@ static void saveReportSimple(const std::string& path, const std::string& text) {
 }
 
 void Game::start() {
-    Player p(50, 10);
-    Enemy e(30, 5);
+    std::cout << "Starting game...\n";
 
-    std::cout << "Battle simulation..." << std::endl;
-    e.takeDamage(p.getAttackPower());
-    std::cout << "Enemy HP after hit: " << e.getHealth() << std::endl;
-
-
-	// Load enemies from file
-    auto enemies = FileManager::loadEnemies("enemies.txt");
-
-    std::cout << "Loaded enemies:\n";
-    for (const auto& e : enemies) {
-        std::cout << e << std::endl;
+    // Wczytanie przeciwników 
+    auto enemies = loadEnemiesSimple("assets/enemies.txt");
+    if (enemies.empty()) {
+        std::cout << "No enemies loaded. Check assets/enemies.txt\n";
+        return;
     }
 
-    FileManager::saveReport("report.txt", "Test OKKKK");
+    // Utwórz Player, Enemy
+    Player player(50, 10);
+    Enemy enemy(enemies[0].hp, enemies[0].ap);
+
+    std::cout << "Battle begins: Player vs " << enemies[0].name << "\n";
+
+    // walka turowa
+    int turn = 1;
+    while (player.isAlive() && enemy.isAlive()) {
+        std::cout << "\n--- Turn " << turn << " ---\n";
+
+        std::cout << "Player attacks!\n";
+        player.attack(&enemy);
+        std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
+
+        if (!enemy.isAlive()) break;
+
+        std::cout << "Enemy attacks!\n";
+        enemy.attack(&player);
+        std::cout << "Player HP: " << player.getHealth() << "\n";
+
+        turn++;
+    }
+
+    // wynik, raport
+    std::string winner = player.isAlive() ? "Player" : enemies[0].name;
+
+    std::string report;
+    report += "=== RPG REPORT ===\n";
+    report += "Enemy: " + enemies[0].name + "\n";
+    report += "Winner: " + winner + "\n";
+    report += "Turns: " + std::to_string(turn) + "\n";
+    report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
+    report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
+
+    saveReportSimple("report.txt", report);
+
+    std::cout << "\nBattle finished! Winner: " << winner << "\n";
+    std::cout << "Report saved to report.txt\n";
 }
