@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+
 struct EnemyRow {
     std::string name;
     int hp = 0;
@@ -39,11 +40,13 @@ static void saveReportSimple(const std::string& path, const std::string& text) {
 
 void Game::start() {
     std::cout << "Starting game...\n";
-
+    
+   
     // Wczytanie przeciwników 
-    auto enemies = loadEnemiesSimple("assets/enemies.txt");
+    auto enemies = loadEnemiesSimple("enemies.txt");
+
     if (enemies.empty()) {
-        std::cout << "No enemies loaded. Check assets/enemies.txt\n";
+        std::cout << "No enemies loaded. Check Resource Files/enemies.txt\n";
         return;
     }
 
