@@ -1,6 +1,1 @@
-=== RPG REPORT ===
-Enemy: Goblin
-Winner: Player
-Turns: 3
-Player HP: 40
-Enemy HP: 0
+Test OKKKK
