@@ -16,6 +16,16 @@ std::string Enemy::getTypeAsString() const {
     }
 }
 
+std::string Enemy::getAsciiArtPath() const {
+    switch (type) {
+    case EnemyType::Goblin: return "assets/ascii/goblin.txt";
+    case EnemyType::Orc: return "assets/ascii/orc.txt";
+    case EnemyType::Skeleton: return "assets/ascii/skeleton.txt";
+    default: return "";
+    }
+}
+
+
 void Enemy::attack(Character* target) {
     target->takeDamage(attackPower);
 }

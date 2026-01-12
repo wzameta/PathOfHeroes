@@ -16,6 +16,7 @@ public:
 	EnemyType getType() const;
 
 	std::string getTypeAsString() const;
+	std::string getAsciiArtPath() const;
 
 	void attack(Character* target) override;
 	void takeDamage(int dmg) override;

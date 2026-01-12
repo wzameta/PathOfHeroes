@@ -144,7 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="enemies.txt" />
+    <Text Include="goblin.txt" />
+    <Text Include="orc.txt" />
     <Text Include="report.txt" />
+    <Text Include="skeleton.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
