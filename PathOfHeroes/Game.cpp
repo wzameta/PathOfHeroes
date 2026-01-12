@@ -7,6 +7,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 
 struct EnemyRow {
@@ -14,6 +16,7 @@ struct EnemyRow {
     int hp = 0;
     int ap = 0;
 };
+
 
 static std::vector<EnemyRow> loadEnemiesSimple(const std::string& path) {
     std::ifstream file(path);
@@ -41,6 +44,7 @@ static void saveReportSimple(const std::string& path, const std::string& text) {
 }
 
 void Game::start() {
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
     std::cout << "Starting game...\n";
     
    
@@ -51,6 +55,22 @@ void Game::start() {
         std::cout << "No enemies loaded. Check Resource Files/enemies.txt\n";
         return;
     }
+
+    int idx = std::rand() % enemies.size();
+    auto& e = enemies[idx];
+    EnemyType type;
+
+    if (e.name == "Goblin")
+        type = EnemyType::Goblin;
+    else if (e.name == "Orc")
+        type = EnemyType::Orc;
+    else if (e.name == "Skeleton")
+        type = EnemyType::Skeleton;
+    else if (e.name == "Demon")
+        type = EnemyType::Demon;
+    else
+        type = EnemyType::Goblin;
+    Enemy enemy(e.hp, e.ap, type);
 
     // Utwórz Player, Enemy
     Player player(50, 10);
