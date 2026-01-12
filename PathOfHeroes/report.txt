@@ -2,5 +2,5 @@
 Enemy: Goblin
 Winner: Player
 Turns: 3
-Player HP: 40
+Player HP: 36
 Enemy HP: 0

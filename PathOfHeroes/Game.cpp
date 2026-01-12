@@ -66,9 +66,8 @@ void Game::start() {
 
     Enemy enemy(e.hp, e.ap, type);
 
-    // Utwórz Player, Enemy
+    // Utwórz Player
     Player player(50, 10);
-    Enemy enemy(enemies[0].hp, enemies[0].ap, EnemyType::Orc);
 
     int level = player.getLevel();
 
@@ -77,6 +76,12 @@ void Game::start() {
 
     std::cout << "Battle begins: Player vs " << enemies[0].name << "\n";
     std::cout << AsciiArt::load(enemy.getAsciiArtPath()) << std::endl;
+
+    std::cout << "Enemy chosen: " << e.name
+        << " (HP " << enemy.getHealth()
+        << ", AP " << enemy.getAttackPower()
+        << ", Level " << player.getLevel() << ")\n";
+
 
     // walka turowa
     int turn = 1;
@@ -97,11 +102,11 @@ void Game::start() {
     }
 
     // wynik, raport
-    std::string winner = player.isAlive() ? "Player" : enemies[0].name;
+    std::string winner = player.isAlive() ? "Player" : e.name;
 
     std::string report;
     report += "=== RPG REPORT ===\n";
-    report += "Enemy: " + enemies[0].name + "\n";
+    report += "Enemy: " + e.name + "\n";
     report += "Winner: " + winner + "\n";
     report += "Turns: " + std::to_string(turn) + "\n";
     report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
