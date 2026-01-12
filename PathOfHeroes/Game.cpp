@@ -83,11 +83,105 @@ void Game::start() {
         // start wyprawy
         Player player(50, 10);
 
-        // WCZYTAJ LISTE PRZECIWNIKOW
+        // WCZYTAJ LISTE PRZECIWNIKOW 
         auto enemies = loadEnemiesSimple("enemies.txt");
         if (enemies.empty()) {
             std::cout << "No enemies loaded. Check enemies.txt\n";
             return;
         }
-    
+
+        // PETLA DROGI
+        while (player.isAlive() && wins < WIN_CONDITION) {
+            // LOSUJ SPOTKANIE
+            int idx = std::rand() % enemies.size();
+            auto& e = enemies[idx];
+
+            EnemyType type = typeFromName(e.name);
+
+            int hp, ap;
+            rollBalancedStats(e, wins, hp, ap);
+
+            Enemy enemy(hp, ap, type);
+
+            std::cout << "\n--- SPOTKANIE ---\n";
+            std::cout << "Spotykasz: " << e.name
+                << " (HP " << enemy.getHealth()
+                << ", AP " << enemy.getAttackPower() << ")\n";
+            std::cout << AsciiArt::load(enemy.getAsciiArtPath()) << std::endl;
+
+            // WALKA / UCIECZKA
+            bool escaped = false;
+            int turn = 1;
+
+            while (player.isAlive() && enemy.isAlive()) {
+                std::cout << "\n--- Tura " << turn << " ---\n";
+                std::cout << "1) Atak\n2) Ucieczka\n> ";
+
+                int choice;
+                std::cin >> choice;
+
+                if (choice == 2) {
+                    if (std::rand() % 2 == 0) { // 50%
+                        std::cout << "Ucieczka udana!\n";
+                        escaped = true;
+                        break;
+                    }
+                    else {
+                        std::cout << "Ucieczka nieudana! Przeciwnik atakuje.\n";
+                        enemy.attack(&player);
+                        std::cout << "Player HP: " << player.getHealth() << "\n";
+                        turn++;
+                        continue;
+                    }
+                }
+
+                // ATK
+                std::cout << "Player attacks!\n";
+                player.attack(&enemy);
+                std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
+                if (!enemy.isAlive()) break;
+
+                std::cout << "Enemy attacks!\n";
+                enemy.attack(&player);
+                std::cout << "Player HP: " << player.getHealth() << "\n";
+
+                turn++;
+            }
+
+            // KONIEC SPOTKANIA - WARUNKI
+            if (!player.isAlive()) {
+                std::string report;
+                report += "=== RPG REPORT ===\n";
+                report += "Result: Defeat\n";
+                report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
+                report += "Last enemy: " + e.name + "\n";
+                report += "Turns: " + std::to_string(turn) + "\n";
+                report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
+                report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
+                report += "Player level: " + std::to_string(player.getLevel()) + "\n";
+                saveReportSimple("report.txt", report);
+
+                std::cout << "\nZgineles. Koniec gry.\n";
+                std::cout << "Report saved to report.txt\n";
+                return;
+            }
+
+            if (!escaped && !enemy.isAlive()) {
+                wins++;
+                std::cout << "\nWygrales walke! Wygrane: " << wins << "/" << WIN_CONDITION << "\n";
+
+               
+                std::string report;
+                report += "=== RPG REPORT ===\n";
+                report += "Enemy: " + e.name + "\n";
+                report += "Winner: Player\n";
+                report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
+                report += "Turns: " + std::to_string(turn) + "\n";
+                report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
+                report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
+                report += "Player level: " + std::to_string(player.getLevel()) + "\n";
+                saveReportSimple("report.txt", report);
+            }
+        }
+    }
     };
