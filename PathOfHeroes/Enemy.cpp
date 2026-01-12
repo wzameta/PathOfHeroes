@@ -36,6 +36,14 @@ void Enemy::takeDamage(int dmg) {
         health = 0;
 }
 
+void Enemy::setHealth(int hp) {
+    health = hp;
+}
+
+void Enemy::setAttackPower(int ap) {
+    attackPower = ap;
+}
+
 void Enemy::debug() {}
 
 

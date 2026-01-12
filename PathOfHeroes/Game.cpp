@@ -70,6 +70,11 @@ void Game::start() {
     Player player(50, 10);
     Enemy enemy(enemies[0].hp, enemies[0].ap, EnemyType::Orc);
 
+    int level = player.getLevel();
+
+    enemy.setHealth(enemy.getHealth() + level * 10);
+    enemy.setAttackPower(enemy.getAttackPower() + level * 2);
+
     std::cout << "Battle begins: Player vs " << enemies[0].name << "\n";
     std::cout << AsciiArt::load(enemy.getAsciiArtPath()) << std::endl;
 

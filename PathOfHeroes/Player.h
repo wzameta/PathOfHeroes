@@ -9,6 +9,7 @@ public:
 	void takeDamage(int dmg) override;
 	void debug();
 	void gainExp(int amount);
+	int getLevel() const;
 };
 
 

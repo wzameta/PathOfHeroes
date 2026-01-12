@@ -20,6 +20,8 @@ public:
 
 	void attack(Character* target) override;
 	void takeDamage(int dmg) override;
+	void setHealth(int hp);
+	void setAttackPower(int ap);
 
 	void debug();
 };

@@ -20,11 +20,6 @@ void Player::attack(Character* target) {
     target->takeDamage(dmg);
 }
 
-void Player::debug() {
-    std::cout << "Player HP: " << health << std::endl;
-}
-
-
 void Player::gainExp(int amount) {
     experience += amount;
     if (experience >= 100) {
@@ -35,6 +30,13 @@ void Player::gainExp(int amount) {
     }
 }
 
+int Player::getLevel() const {
+    return level;
+}
 
+
+void Player::debug() {
+    std::cout << "Player HP: " << health << std::endl;
+}
 
 
