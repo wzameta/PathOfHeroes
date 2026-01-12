@@ -36,6 +36,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AsciiArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -56,6 +59,9 @@
     <ClInclude Include="EnemyData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AsciiArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="enemies.txt">
@@ -63,6 +69,15 @@
     </Text>
     <Text Include="report.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="goblin.txt">
+      <Filter>Resource Files\ascii</Filter>
+    </Text>
+    <Text Include="orc.txt">
+      <Filter>Resource Files\ascii</Filter>
+    </Text>
+    <Text Include="skeleton.txt">
+      <Filter>Resource Files\ascii</Filter>
     </Text>
   </ItemGroup>
 </Project>

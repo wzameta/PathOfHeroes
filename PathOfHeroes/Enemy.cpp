@@ -18,9 +18,9 @@ std::string Enemy::getTypeAsString() const {
 
 std::string Enemy::getAsciiArtPath() const {
     switch (type) {
-    case EnemyType::Goblin: return "assets/ascii/goblin.txt";
-    case EnemyType::Orc: return "assets/ascii/orc.txt";
-    case EnemyType::Skeleton: return "assets/ascii/skeleton.txt";
+    case EnemyType::Goblin: return "ascii/goblin.txt";
+    case EnemyType::Orc: return "ascii/orc.txt";
+    case EnemyType::Skeleton: return "ascii/skeleton.txt";
     default: return "";
     }
 }
