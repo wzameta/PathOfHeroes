@@ -17,7 +17,6 @@ struct EnemyRow {
     int ap = 0;
 };
 
-
 static std::vector<EnemyRow> loadEnemiesSimple(const std::string& path) {
     std::ifstream file(path);
     std::vector<EnemyRow> out;
@@ -44,7 +43,7 @@ static void saveReportSimple(const std::string& path, const std::string& text) {
 }
 
 void Game::start() {
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    std::srand((unsigned)std::time(nullptr));
     std::cout << "Starting game...\n";
     
    
@@ -60,16 +59,11 @@ void Game::start() {
     auto& e = enemies[idx];
     EnemyType type;
 
-    if (e.name == "Goblin")
-        type = EnemyType::Goblin;
-    else if (e.name == "Orc")
-        type = EnemyType::Orc;
-    else if (e.name == "Skeleton")
-        type = EnemyType::Skeleton;
-    else if (e.name == "Demon")
-        type = EnemyType::Demon;
-    else
-        type = EnemyType::Goblin;
+    if (e.name == "Goblin") type = EnemyType::Goblin;
+    else if (e.name == "Orc") type = EnemyType::Orc;
+    else if (e.name == "Skeleton") type = EnemyType::Skeleton;
+    else type = EnemyType::Goblin; // fallback
+
     Enemy enemy(e.hp, e.ap, type);
 
     // Utwórz Player, Enemy
