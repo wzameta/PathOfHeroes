@@ -16,6 +16,9 @@
     <Filter Include="Resource Files\ascii">
       <UniqueIdentifier>{e8dc9a38-0f23-4f0b-ab42-1cce0d205afe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="docs/">
+      <UniqueIdentifier>{096c7112-e01d-4f89-aae6-0adbcd74564d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp">
@@ -82,5 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="architecture.md">
+      <Filter>docs/</Filter>
+    </None>
   </ItemGroup>
 </Project>

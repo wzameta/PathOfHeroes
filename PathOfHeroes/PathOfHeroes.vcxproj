@@ -156,6 +156,7 @@
     <Text Include="skeleton.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="architecture.md" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
