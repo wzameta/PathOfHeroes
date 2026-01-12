@@ -111,6 +111,7 @@ void Game::start() {
     report += "Turns: " + std::to_string(turn) + "\n";
     report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
     report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
+    report += "Player level: " + std::to_string(player.getLevel()) + "\n";
 
     saveReportSimple("report.txt", report);
 

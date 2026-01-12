@@ -1,6 +1,7 @@
 === RPG REPORT ===
 Enemy: Goblin
 Winner: Player
-Turns: 3
-Player HP: 36
+Turns: 4
+Player HP: 29
 Enemy HP: 0
+Player level: 1
