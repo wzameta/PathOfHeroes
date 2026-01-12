@@ -75,19 +75,16 @@ void Game::start() {
         turn++;
     }
 
-    // wynik, raport
+    // wynik
     std::string winner = player.isAlive() ? "Player" : enemies[0].name;
 
-    std::string report;
-    report += "=== RPG REPORT ===\n";
-    report += "Enemy: " + enemies[0].name + "\n";
-    report += "Winner: " + winner + "\n";
-    report += "Turns: " + std::to_string(turn) + "\n";
-    report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
-    report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
-
-    saveReportSimple("report.txt", report);
-
+    //  zapis raportu
+    FileManager::saveReport(
+        "Player",
+        player.getHealth(),
+        enemy.isAlive() ? 0 : 1
+    );
     std::cout << "\nBattle finished! Winner: " << winner << "\n";
     std::cout << "Report saved to report.txt\n";
+
 }
