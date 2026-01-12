@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Enemy.h"
 #include "FileManager.h"
 #include <iostream>
 #include <fstream>

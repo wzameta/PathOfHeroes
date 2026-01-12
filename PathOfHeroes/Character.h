@@ -3,13 +3,16 @@
 
 class Character {
 protected:
-	int health, attackPower;
+	int health, attackPower, maxHealth;
 public:
 	Character(int hp, int ap);
 	virtual ~Character() = default;
 
 	int getHealth() const;
 	int getAttackPower() const;
+	bool isAlive() const;
+	bool isDead() const;
+	void heal(int amount);
 
 	
 
