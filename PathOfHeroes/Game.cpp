@@ -36,6 +36,26 @@ static std::vector<EnemyRow> loadEnemiesSimple(const std::string& path) {
     }
     return out;
 }
+static int randRange(int a, int b) { // inclusive
+    return a + (std::rand() % (b - a + 1));
+}
+
+static EnemyType typeFromName(const std::string& name) {
+    if (name == "Goblin") return EnemyType::Goblin;
+    if (name == "Orc") return EnemyType::Orc;
+    if (name == "Skeleton") return EnemyType::Skeleton;
+    return EnemyType::Goblin;
+}
+
+// robi "fair" losowe staty + lekki wzrost po liczbie wygranych
+static void rollBalancedStats(const EnemyRow& e, int winsSoFar, int& outHp, int& outAp) {
+    outHp = e.hp + randRange(-3, 3) + winsSoFar * 2;      // HP roœnie delikatnie
+    outAp = e.ap + randRange(-1, 2) + (winsSoFar / 2);    // AP roœnie wolniej
+
+    if (outHp < 1) outHp = 1;
+    if (outAp < 1) outAp = 1;
+}
+
 
 static void saveReportSimple(const std::string& path, const std::string& text) {
     std::ofstream file(path);

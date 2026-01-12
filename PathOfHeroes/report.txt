@@ -1,7 +1,7 @@
 === RPG REPORT ===
-Enemy: Goblin
-Winner: Player
-Turns: 4
-Player HP: 29
-Enemy HP: 0
+Enemy: Orc
+Winner: Orc
+Turns: 6
+Player HP: 0
+Enemy HP: 20
 Player level: 1
