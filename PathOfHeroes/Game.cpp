@@ -47,10 +47,10 @@ static EnemyType typeFromName(const std::string& name) {
     return EnemyType::Goblin;
 }
 
-// robi "fair" losowe staty + lekki wzrost po liczbie wygranych
+// losowe staty + wzrost po liczbie wygranych
 static void rollBalancedStats(const EnemyRow& e, int winsSoFar, int& outHp, int& outAp) {
-    outHp = e.hp + randRange(-3, 3) + winsSoFar * 2;      // HP roœnie delikatnie
-    outAp = e.ap + randRange(-1, 2) + (winsSoFar / 2);    // AP roœnie wolniej
+    outHp = e.hp + randRange(-3, 3) + winsSoFar * 2;      // HP roœnie 
+    outAp = e.ap + randRange(-1, 2) + (winsSoFar / 2);    // AP roœnie 
 
     if (outHp < 1) outHp = 1;
     if (outAp < 1) outAp = 1;
@@ -64,77 +64,30 @@ static void saveReportSimple(const std::string& path, const std::string& text) {
 
 void Game::start() {
     std::srand((unsigned)std::time(nullptr));
-    std::cout << "Starting game...\n";
+
+    const int WIN_CONDITION = 5;
+    int wins = 0;
+
+    // START MENU
+    while (true) {
+        std::cout << "=== PATH OF HEROES ===\n";
+        std::cout << "1) Wyrusz w droge\n";
+        std::cout << "2) Zakoncz\n> ";
+
+        int startChoice;
+        std::cin >> startChoice;
+
+        if (startChoice == 2) return;
+        if (startChoice != 1) continue;
+
+        // start wyprawy
+        Player player(50, 10);
+
+        // WCZYTAJ LISTE PRZECIWNIKOW
+        auto enemies = loadEnemiesSimple("enemies.txt");
+        if (enemies.empty()) {
+            std::cout << "No enemies loaded. Check enemies.txt\n";
+            return;
+        }
     
-   
-    // Wczytanie przeciwników 
-    auto enemies = loadEnemiesSimple("enemies.txt");
-
-    if (enemies.empty()) {
-        std::cout << "No enemies loaded. Check Resource Files/enemies.txt\n";
-        return;
-    }
-
-    int idx = std::rand() % enemies.size();
-    auto& e = enemies[idx];
-    EnemyType type;
-
-    if (e.name == "Goblin") type = EnemyType::Goblin;
-    else if (e.name == "Orc") type = EnemyType::Orc;
-    else if (e.name == "Skeleton") type = EnemyType::Skeleton;
-    else type = EnemyType::Goblin; // fallback
-
-    Enemy enemy(e.hp, e.ap, type);
-
-    // Utwórz Player
-    Player player(50, 10);
-
-    int level = player.getLevel();
-
-    enemy.setHealth(enemy.getHealth() + level * 10);
-    enemy.setAttackPower(enemy.getAttackPower() + level * 2);
-
-    std::cout << "Battle begins: Player vs " << enemies[0].name << "\n";
-    std::cout << AsciiArt::load(enemy.getAsciiArtPath()) << std::endl;
-
-    std::cout << "Enemy chosen: " << e.name
-        << " (HP " << enemy.getHealth()
-        << ", AP " << enemy.getAttackPower()
-        << ", Level " << player.getLevel() << ")\n";
-
-
-    // walka turowa
-    int turn = 1;
-    while (player.isAlive() && enemy.isAlive()) {
-        std::cout << "\n--- Turn " << turn << " ---\n";
-
-        std::cout << "Player attacks!\n";
-        player.attack(&enemy);
-        std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
-
-        if (!enemy.isAlive()) break;
-
-        std::cout << "Enemy attacks!\n";
-        enemy.attack(&player);
-        std::cout << "Player HP: " << player.getHealth() << "\n";
-
-        turn++;
-    }
-
-    // wynik, raport
-    std::string winner = player.isAlive() ? "Player" : e.name;
-
-    std::string report;
-    report += "=== RPG REPORT ===\n";
-    report += "Enemy: " + e.name + "\n";
-    report += "Winner: " + winner + "\n";
-    report += "Turns: " + std::to_string(turn) + "\n";
-    report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
-    report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
-    report += "Player level: " + std::to_string(player.getLevel()) + "\n";
-
-    saveReportSimple("report.txt", report);
-
-    std::cout << "\nBattle finished! Winner: " << winner << "\n";
-    std::cout << "Report saved to report.txt\n";
-}
+    };
