@@ -53,7 +53,7 @@ void Game::start() {
 
     // Utwórz Player, Enemy
     Player player(50, 10);
-    Enemy enemy(enemies[0].hp, enemies[0].ap);
+    Enemy enemy(enemies[0].hp, enemies[0].ap, EnemyType::Goblin);
 
     std::cout << "Battle begins: Player vs " << enemies[0].name << "\n";
 

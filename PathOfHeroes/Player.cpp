@@ -9,9 +9,15 @@ void Player::takeDamage(int dmg) {
         health = 0;
 }
 
-
 void Player::attack(Character* target) {
-    target->takeDamage(attackPower);
+    int dmg = attackPower;
+
+    // 10% szansy na krytyk
+    if (rand() % 10 == 0) {
+        dmg *= 2;
+    }
+
+    target->takeDamage(dmg);
 }
 
 void Player::debug() {
@@ -29,15 +35,6 @@ void Player::gainExp(int amount) {
     }
 }
 
-void Player::attack(Character* target) {
-    int dmg = attackPower;
 
-    // 10% szansy na krytyk
-    if (rand() % 10 == 0) {
-        dmg *= 2;
-    }
-
-    target->takeDamage(dmg);
-}
 
 

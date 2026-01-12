@@ -14,16 +14,9 @@ public:
 	bool isDead() const;
 	void heal(int amount);
 
-	
-
 
 	virtual void attack(Character* target) = 0;
 	virtual void takeDamage(int dmg) = 0;
-
-	
-	bool isAlive() const;
-
-
 };
 
 

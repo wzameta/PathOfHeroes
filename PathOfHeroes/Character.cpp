@@ -23,9 +23,6 @@ void Character::heal(int amount) {
 	if (health > maxHealth) health = maxHealth;
 }
 
-bool Character::isAlive() const {
-		return health > 0;
-}
 
 
 
