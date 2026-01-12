@@ -1,25 +1,20 @@
-#include "FileManager.h"
-#include "fstream"
-
-std::vector<std::string> FileManager::loadEnemies(const std::string& path) {
-	std::ifstream file(path);
-	std::vector<std::string> lines;
-	std::string line;
-	while (std::getline(file, line)) {
-		lines.push_back(line);
-	}
-	return lines;
+#include <fstream>
+#include <ctime>
+void FileManager::saveReport(
+    const std::string& playerName,
+    int playerHP,
+    int enemiesDefeated
+) {
+    std::ofstream file("report.txt", std::ios::app);
+    if (!file.is_open()) return;
+    std::time_t now = std::time(nullptr);
+    file << "===== GAME REPORT =====\n";
+    file << "Player: " << playerName << "\n";
+    file << "HP left: " << playerHP << "\n";
+    file << "Enemies defeated: " << enemiesDefeated << "\n";
+    file << "Time: " << std::ctime(&now);
+    file << "=======================\n\n";
+    file.close();
 }
-
-
-void FileManager::saveReport(const std::string& path, const std::string& text) {
-	std::ofstream file(path);
-	file << text;
-}
-
-
-
-
-
 
 
