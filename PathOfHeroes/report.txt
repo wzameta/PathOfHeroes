@@ -1,8 +1,8 @@
 === RPG REPORT ===
 Result: Defeat
-Wins: 1/5
-Last enemy: Orc
+Wins: 4/5
+Last enemy: Goblin
 Turns: 2
 Player HP: 0
-Enemy HP: 53
+Enemy HP: 22
 Player level: 1

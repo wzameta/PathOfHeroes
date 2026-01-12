@@ -80,8 +80,8 @@ void Game::start() {
         if (startChoice == 2) return;
         if (startChoice != 1) continue;
 
-        // start wyprawy
-        Player player(50, 10);
+        // start gry
+        Player player(100, 15);
 
         // WCZYTAJ LISTE PRZECIWNIKOW 
         auto enemies = loadEnemiesSimple("enemies.txt");
@@ -170,7 +170,7 @@ void Game::start() {
                 wins++;
                 std::cout << "\nWygrales walke! Wygrane: " << wins << "/" << WIN_CONDITION << "\n";
 
-               
+                
                 std::string report;
                 report += "=== RPG REPORT ===\n";
                 report += "Enemy: " + e.name + "\n";
@@ -182,6 +182,43 @@ void Game::start() {
                 report += "Player level: " + std::to_string(player.getLevel()) + "\n";
                 saveReportSimple("report.txt", report);
             }
+
+            // WYGRANA GRY (5 walk)
+            if (wins >= WIN_CONDITION) {
+                std::string report;
+                report += "=== RPG REPORT ===\n";
+                report += "Result: Victory (5 wins)\n";
+                report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
+                report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
+                report += "Player level: " + std::to_string(player.getLevel()) + "\n";
+                saveReportSimple("report.txt", report);
+
+                std::cout << "\nGRATULACJE! Wygrales gre (5 wygranych).\n";
+                std::cout << "Report saved to report.txt\n";
+                return;
+            }
+
+            // MENU PO SPOTKANIU (po walce lub ucieczce)
+            while (true) {
+                std::cout << "\n1) Wyrusz dalej\n2) Zakoncz droge\n> ";
+                int after;
+                std::cin >> after;
+
+                if (after == 1) break; // pêtla dalej -> kolejne spotkanie
+                if (after == 2) {
+                    std::string report;
+                    report += "=== RPG REPORT ===\n";
+                    report += "Result: Abandoned (player ended the journey)\n";
+                    report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
+                    report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
+                    report += "Player level: " + std::to_string(player.getLevel()) + "\n";
+                    saveReportSimple("report.txt", report);
+
+                    std::cout << "\nZakonczyles droge.\n";
+                    std::cout << "Report saved to report.txt\n";
+                    return;
+                }
+            }
         }
     }
-    };
+}
