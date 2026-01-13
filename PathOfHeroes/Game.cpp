@@ -204,7 +204,7 @@ void Game::start() {
                 int after;
                 std::cin >> after;
 
-                if (after == 1) break; // pêtla dalej -> kolejne spotkanie
+                if (after == 1) break; // dalej odpali sie kolejne spotkanie
                 if (after == 2) {
                     std::string report;
                     report += "=== RPG REPORT ===\n";
