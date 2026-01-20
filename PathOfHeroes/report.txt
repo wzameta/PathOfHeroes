@@ -1,8 +1,5 @@
 === RPG REPORT ===
-Result: Defeat
-Wins: 4/5
-Last enemy: Goblin
-Turns: 2
-Player HP: 0
-Enemy HP: 22
+Result: Victory (5 wins)
+Wins: 5/5
+Player HP: 2
 Player level: 1
