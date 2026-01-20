@@ -21,6 +21,6 @@ wyœwietlanie ASCII-artów oraz zapis raportu walki do pliku.
 - `resources/` – pliki txt (enemies, ascii)
 
 ## Autorzy
-- Wojciech Zamêta – logika gry, walka, balans
-- Mateusz Zaborowski – pliki, zasoby, struktura
-- Eryk ¯muda – dokumentacja, raport, organizacja
+- Wojciech Zamêta
+- Mateusz Zaborowski 
+- Eryk ¯muda 
