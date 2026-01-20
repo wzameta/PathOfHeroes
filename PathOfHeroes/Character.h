@@ -1,24 +1,18 @@
 #pragma once
 
+class Character
+{
+  protected:
+    int health, attackPower;
 
-class Character {
-protected:
-	int health, attackPower, maxHealth;
-public:
-	Character(int hp, int ap);
-	virtual ~Character() = default;
+  public:
+    Character(int hp, int ap);
+    virtual ~Character() = default;
 
-	int getHealth() const;
-	int getAttackPower() const;
-	bool isAlive() const;
-	bool isDead() const;
-	void heal(int amount);
+    int getHealth() const;
+    int getAttackPower() const;
+    bool isAlive() const;
 
-
-	virtual void attack(Character* target) = 0;
-	virtual void takeDamage(int dmg) = 0;
+    virtual void attack(Character *target) = 0;
+    virtual void takeDamage(int dmg) = 0;
 };
-
-
-
-

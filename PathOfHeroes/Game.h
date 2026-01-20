@@ -1,8 +1,9 @@
 #pragma once
-#include "Player.h"
 #include "Enemy.h"
+#include "Player.h"
 
-class Game {
-public:
+class Game
+{
+  public:
     void start();
 };
