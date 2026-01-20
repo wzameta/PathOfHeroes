@@ -28,7 +28,9 @@ static std::vector<EnemyRow> loadEnemiesSimple(const std::string &path)
         return out;
     }
 
-    std::string line;
+    std::string line; //zamiana na liste
+
+	//odczyt linii pliku - zwracanie wektora out (pusty jesli linia ró¿na od spodziewanych danych)
     while (std::getline(file, line))
     {
         std::istringstream iss(line);
@@ -40,11 +42,13 @@ static std::vector<EnemyRow> loadEnemiesSimple(const std::string &path)
     }
     return out;
 }
+// losowanie liczby z przedzialu [a, b]
 static int randRange(int a, int b)
-{ // inclusive
+{ 
     return a + (std::rand() % (b - a + 1));
 }
 
+// zamiana nazwy przeciwnika z pliku na typ Enemy
 static EnemyType typeFromName(const std::string &name)
 {
     if (name == "Goblin")
@@ -60,7 +64,7 @@ static EnemyType typeFromName(const std::string &name)
 static void rollBalancedStats(const EnemyRow &e, int winsSoFar, int &outHp, int &outAp)
 {
     outHp = e.hp + randRange(-3, 3) + winsSoFar * 2;   // HP roœnie
-    outAp = e.ap + randRange(-1, 2) + (winsSoFar / 2); // AP roœnie
+    outAp = e.ap + randRange(-2, 2) + (winsSoFar / 2); // AP roœnie
 
     if (outHp < 1)
         outHp = 1;
@@ -68,6 +72,7 @@ static void rollBalancedStats(const EnemyRow &e, int winsSoFar, int &outHp, int 
         outAp = 1;
 }
 
+// otwarcie pliku do zapisu
 static void saveReportSimple(const std::string &path, const std::string &text)
 {
     std::ofstream file(path);
@@ -76,12 +81,14 @@ static void saveReportSimple(const std::string &path, const std::string &text)
 
 void Game::start()
 {
+    //przygotowanie generatora losowosci
     std::srand((unsigned)std::time(nullptr));
 
+	// warunki wygranej
     const int WIN_CONDITION = 5;
     int wins = 0;
 
-    // START MENU
+	// petla calej gry
     while (true)
     {
         std::cout << "=== PATH OF HEROES ===\n";
@@ -96,10 +103,13 @@ void Game::start()
         if (startChoice != 1)
             continue;
 
-        // start gry
+
+
+
+		// statystki gracza
         Player player(100, 15);
 
-        // WCZYTAJ LISTE PRZECIWNIKOW
+        // wczytywanie przeciwnikow do gry
         auto enemies = loadEnemiesSimple("enemies.txt");
         if (enemies.empty())
         {
@@ -107,10 +117,10 @@ void Game::start()
             return;
         }
 
-        // PETLA DROGI
+        // petla spotkan
         while (player.isAlive() && wins < WIN_CONDITION)
         {
-            // LOSUJ SPOTKANIE
+			// losowy wrog - na podstawie ilosci wrogow w pliku
             int idx = std::rand() % enemies.size();
             auto &e = enemies[idx];
 
@@ -119,17 +129,19 @@ void Game::start()
             int hp, ap;
             rollBalancedStats(e, wins, hp, ap);
 
-            Enemy enemy(hp, ap, type);
+			//wyswietlenie przeciwnika z "losowymi" danymi
+            Enemy enemy(hp, ap, type); 
 
             std::cout << "\n--- SPOTKANIE ---\n";
             std::cout << "Spotykasz: " << e.name << " (HP " << enemy.getHealth() << ", AP " << enemy.getAttackPower()
                       << ")\n";
             std::cout << AsciiArt::load(enemy.getAsciiArtPath()) << std::endl;
 
-            // WALKA / UCIECZKA
+			// walka / ucieczka
             bool escaped = false;
             int turn = 1;
 
+			// petla walki
             while (player.isAlive() && enemy.isAlive())
             {
                 std::cout << "\n--- Tura " << turn << " ---\n";
@@ -156,7 +168,7 @@ void Game::start()
                     }
                 }
 
-                // ATK
+				// normalny atak po wyborze 1 
                 std::cout << "Player attacks!\n";
                 player.attack(&enemy);
                 std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
@@ -170,7 +182,7 @@ void Game::start()
                 turn++;
             }
 
-            // KONIEC SPOTKANIA - WARUNKI
+			// koniec walki - wyniki
             if (!player.isAlive())
             {
                 std::string report;
@@ -204,7 +216,7 @@ void Game::start()
                 saveReportSimple("report.txt", report);
             }
 
-            // WYGRANA GRY (5 walk)
+            // wygrana (5 walk)
             if (wins >= WIN_CONDITION)
             {
                 std::string report;
@@ -219,7 +231,7 @@ void Game::start()
                 return;
             }
 
-            // MENU PO SPOTKANIU (po walce lub ucieczce)
+            // menu (po walce lub ucieczce)
             while (true)
             {
                 std::cout << "\n1) Wyrusz dalej\n2) Zakoncz droge\n> ";

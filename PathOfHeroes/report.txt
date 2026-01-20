@@ -1,8 +1,4 @@
 === RPG REPORT ===
-Result: Defeat
-Wins: 3/5
-Last enemy: Orc
-Turns: 7
-Player HP: 0
-Enemy HP: 65
-Player level: 1
+Result: Abandoned (player ended the journey)
+Wins: 1/5
+Player HP: 95
