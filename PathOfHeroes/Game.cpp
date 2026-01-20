@@ -100,13 +100,10 @@ void Game::start()
             continue;
         }
 
-
-
-
 		// statystki gracza
         Player player(100, 15);
 
-        // WCZYTAJ LISTE PRZECIWNIKOW (reuse FileManager - single place for file IO)
+		//wczytanie przeciwnikow z pliku
         auto rawLines = FileManager::loadEnemies("enemies.txt");
         std::vector<EnemyRow> enemies;
         for (const auto &line : rawLines)
@@ -163,8 +160,8 @@ void Game::start()
                     continue;
                 }
 
+                // walka
                 if (choice == 1) {
-                    // ATAK
                     std::cout << "Player attacks!\n";
                     player.attack(&enemy);
                     std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
@@ -176,8 +173,9 @@ void Game::start()
                     std::cout << "Player HP: " << player.getHealth() << "\n";
                     turn++;
                 }
+
+				// ucieczka
                 else if (choice == 2) {
-                    // UCIECZKA
                     if (std::rand() % 2 == 0) {
                         std::cout << "Ucieczka udana!\n";
                         escaped = true;
@@ -209,7 +207,7 @@ void Game::start()
                 report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
                 FileManager::saveReport("report.txt", report);
 
-                std::cout << "\nZgineles. Koniec gry.\n";
+                std::cout << "\nZginales koniec gry.\n";
                 std::cout << "Report saved to report.txt\n";
                 return;
             }

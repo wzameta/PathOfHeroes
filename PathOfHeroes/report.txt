@@ -1,7 +1,7 @@
 === RPG REPORT ===
-Result: Defeat
-Wins: 3/5
-Last enemy: Orc
-Turns: 4
-Player HP: 0
-Enemy HP: 33
+Enemy: Orc
+Winner: Player
+Wins: 1/5
+Turns: 3
+Player HP: 88
+Enemy HP: 0

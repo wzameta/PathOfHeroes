@@ -16,7 +16,7 @@ void Player::attack(Character *target)
 {
     int dmg = attackPower;
 
-    // 10% szansy na krytyk
+    // 10% szansy na kryta
     if (rand() % 10 == 0)
     {
         dmg *= 2;
