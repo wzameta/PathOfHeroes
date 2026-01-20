@@ -25,7 +25,3 @@ void Player::attack(Character *target)
     target->takeDamage(dmg);
 }
 
-void Player::debug()
-{
-    std::cout << "Player HP: " << health << std::endl;
-}

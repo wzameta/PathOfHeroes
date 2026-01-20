@@ -17,7 +17,6 @@ class Enemy : public Character
     Enemy(int hp, int ap, EnemyType t);
     EnemyType getType() const;
 
-    std::string getTypeAsString() const;
     std::string getAsciiArtPath() const;
 
     void attack(Character *target) override;

@@ -9,6 +9,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <limits>
 
 struct EnemyRow
 {
@@ -17,29 +18,6 @@ struct EnemyRow
     int ap = 0;
 };
 
-static std::vector<EnemyRow> loadEnemiesSimple(const std::string &path)
-{
-    std::ifstream file(path);
-    std::vector<EnemyRow> out;
-
-    if (!file.is_open())
-    {
-        std::cout << "[ERROR] Cannot open file: " << path << "\n";
-        return out;
-    }
-
-    std::string line;
-    while (std::getline(file, line))
-    {
-        std::istringstream iss(line);
-        EnemyRow e;
-        if (iss >> e.name >> e.hp >> e.ap)
-        {
-            out.push_back(e);
-        }
-    }
-    return out;
-}
 static int randRange(int a, int b)
 { // inclusive
     return a + (std::rand() % (b - a + 1));
@@ -68,12 +46,6 @@ static void rollBalancedStats(const EnemyRow &e, int winsSoFar, int &outHp, int 
         outAp = 1;
 }
 
-static void saveReportSimple(const std::string &path, const std::string &text)
-{
-    std::ofstream file(path);
-    file << text;
-}
-
 void Game::start()
 {
     std::srand((unsigned)std::time(nullptr));
@@ -89,18 +61,35 @@ void Game::start()
         std::cout << "2) Zakoncz\n> ";
 
         int startChoice;
-        std::cin >> startChoice;
-
+        if (!(std::cin >> startChoice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
+            continue;
+        }
         if (startChoice == 2)
             return;
-        if (startChoice != 1)
+        if (startChoice != 1) {
+            std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
             continue;
+        }
 
         // start gry
         Player player(100, 15);
 
-        // WCZYTAJ LISTE PRZECIWNIKOW
-        auto enemies = loadEnemiesSimple("enemies.txt");
+        // WCZYTAJ LISTE PRZECIWNIKOW (reuse FileManager - single place for file IO)
+        auto rawLines = FileManager::loadEnemies("enemies.txt");
+        std::vector<EnemyRow> enemies;
+        for (const auto &line : rawLines)
+        {
+            std::istringstream iss(line);
+            EnemyRow e;
+            if (iss >> e.name >> e.hp >> e.ap)
+            {
+                enemies.push_back(e);
+            }
+        }
+
         if (enemies.empty())
         {
             std::cout << "No enemies loaded. Check enemies.txt\n";
@@ -136,38 +125,44 @@ void Game::start()
                 std::cout << "1) Atak\n2) Ucieczka\n> ";
 
                 int choice;
-                std::cin >> choice;
+                if (!(std::cin >> choice)) {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
+                    continue;
+                }
 
-                if (choice == 2)
-                {
-                    if (std::rand() % 2 == 0)
-                    { // 50%
+                if (choice == 1) {
+                    // ATAK
+                    std::cout << "Player attacks!\n";
+                    player.attack(&enemy);
+                    std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
+                    if (!enemy.isAlive())
+                        break;
+
+                    std::cout << "Enemy attacks!\n";
+                    enemy.attack(&player);
+                    std::cout << "Player HP: " << player.getHealth() << "\n";
+                    turn++;
+                }
+                else if (choice == 2) {
+                    // UCIECZKA
+                    if (std::rand() % 2 == 0) {
                         std::cout << "Ucieczka udana!\n";
                         escaped = true;
                         break;
                     }
-                    else
-                    {
+                    else {
                         std::cout << "Ucieczka nieudana! Przeciwnik atakuje.\n";
                         enemy.attack(&player);
                         std::cout << "Player HP: " << player.getHealth() << "\n";
                         turn++;
-                        continue;
                     }
                 }
-
-                // ATK
-                std::cout << "Player attacks!\n";
-                player.attack(&enemy);
-                std::cout << "Enemy HP: " << enemy.getHealth() << "\n";
-                if (!enemy.isAlive())
-                    break;
-
-                std::cout << "Enemy attacks!\n";
-                enemy.attack(&player);
-                std::cout << "Player HP: " << player.getHealth() << "\n";
-
-                turn++;
+                else {
+                    std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
+                    continue; 
+                }
             }
 
             // KONIEC SPOTKANIA - WARUNKI
@@ -181,7 +176,7 @@ void Game::start()
                 report += "Turns: " + std::to_string(turn) + "\n";
                 report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
                 report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
-                saveReportSimple("report.txt", report);
+                FileManager::saveReport("report.txt", report);
 
                 std::cout << "\nZgineles. Koniec gry.\n";
                 std::cout << "Report saved to report.txt\n";
@@ -201,7 +196,7 @@ void Game::start()
                 report += "Turns: " + std::to_string(turn) + "\n";
                 report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
                 report += "Enemy HP: " + std::to_string(enemy.getHealth()) + "\n";
-                saveReportSimple("report.txt", report);
+                FileManager::saveReport("report.txt", report);
             }
 
             // WYGRANA GRY (5 walk)
@@ -212,7 +207,7 @@ void Game::start()
                 report += "Result: Victory (5 wins)\n";
                 report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
                 report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
-                saveReportSimple("report.txt", report);
+                FileManager::saveReport("report.txt", report);
 
                 std::cout << "\nGRATULACJE! Wygrales gre (5 wygranych).\n";
                 std::cout << "Report saved to report.txt\n";
@@ -223,11 +218,17 @@ void Game::start()
             while (true)
             {
                 std::cout << "\n1) Wyrusz dalej\n2) Zakoncz droge\n> ";
+
                 int after;
-                std::cin >> after;
+                if (!(std::cin >> after)) {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
+                    continue;
+                }
 
                 if (after == 1)
-                    break; // dalej odpali sie kolejne spotkanie
+                    break;
                 if (after == 2)
                 {
                     std::string report;
@@ -235,12 +236,14 @@ void Game::start()
                     report += "Result: Abandoned (player ended the journey)\n";
                     report += "Wins: " + std::to_string(wins) + "/" + std::to_string(WIN_CONDITION) + "\n";
                     report += "Player HP: " + std::to_string(player.getHealth()) + "\n";
-                    saveReportSimple("report.txt", report);
+                    FileManager::saveReport("report.txt", report);
 
                     std::cout << "\nZakonczyles droge.\n";
                     std::cout << "Report saved to report.txt\n";
                     return;
                 }
+
+                std::cout << "Niepoprawny wybor. Wpisz 1 lub 2.\n";
             }
         }
     }

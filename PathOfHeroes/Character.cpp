@@ -19,10 +19,6 @@ bool Character::isAlive() const
     return health > 0;
 }
 
-bool Character::isDead() const
-{
-    return health <= 0;
-}
 
 void Character::heal(int amount)
 {

@@ -12,7 +12,6 @@ class Character
     int getHealth() const;
     int getAttackPower() const;
     bool isAlive() const;
-    bool isDead() const;
     void heal(int amount);
 
     virtual void attack(Character *target) = 0;
